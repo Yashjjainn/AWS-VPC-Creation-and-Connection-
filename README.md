@@ -42,9 +42,27 @@
     ![Screenshot from 2025-03-11 16-47-47](https://github.com/user-attachments/assets/5e56f78d-faad-4860-a8c6-a463d5828677)
 
 ## Step 4 : Creating Virtual Private Gateway (Vgw)
+- Vgw is one of the end points of site to site VPN & is used to connect VPC to an on premise data center but for this tutorial we will be using it to connect the VPC to our personal computer
+- We will make sure the whenever any instance or service in private subnet wants to access internet it can do so securely through the on premise data center(in this case our laptop) that has internet access rather than directly accessing the internet. Hence our laptop will act as bi-directional NAT or default gateway to private subnet of VPC.
 - Navigate to Virtual Private Gateways section and click on create virtual private gateway and create it with default ASN
 - Once created attach it to the VPC(notice that it will not appear in VPC resource map even after it's attached to the VPC)
     ![Screenshot from 2025-03-11 16-58-26](https://github.com/user-attachments/assets/31a7f252-9568-4892-ade0-08b42eb1343f)
-- Now we edit the private route table again
-    
+- Now we edit the private route table again to route the traffic intended for exchange with other networks to Vgw
+  - New rule : 0.0.0.0/0 --> vgw
+    ![Screenshot from 2025-03-11 17-00-06](https://github.com/user-attachments/assets/49901449-8af5-47be-8f8f-bccd862f88c2)
+
+## Step 5 : Connecting to VPC using Site to Site VPN
+- With our VPC setup it's time we start on the connection part, for which we are going to use AWS site to site VPN service.
+- A site to site VPN is used to securely connect two networks, in our case our AWS VPC and our pc sitting on our private LAN.
+- It has seeveral components engaged in it, the main components are:
+   - AWS side : VPC(along with it's components) & Vgw
+   - On-prem side : Customer gateway & VPN Connection
+
+## Step A : Creating a Customer Gateway
+- Navigate to customer gateways section and click on create customer gateway, use the default value for BGP ASN, insert you PC's public IPv4 address in IP adress space (you can find it by searching "my public ip" on google and make sure it's static once customer gateway is connected to it)
+  ![Screenshot from 2025-03-11 18-17-16](https://github.com/user-attachments/assets/1588a869-fca7-4e86-a834-8d61f43df08e)
+- 
+
+
+  
 
